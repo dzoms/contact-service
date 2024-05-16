@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  dzoms-user-contact-service-postgres:
+    image: postgres:16.1
+    container_name: dzoms_user_contact_service_postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: user_contact_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+    networks:
+      - dzoms_user_contact_service_net
+
+networks:
+  dzoms_user_contact_service_net:

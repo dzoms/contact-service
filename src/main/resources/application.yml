@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/user_contact_db
+    username: user
+    password: user
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    change-log: classpath:/db/changelog.xml
+  web:
+    resources:
+      add-mappings: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/dzoms-realm
+
+server:
+  port: 8083
+  servlet:
+    session:
+      timeout: 30
+  error:
+    whitelabel:
+      enabled: false
