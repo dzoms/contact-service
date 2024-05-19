@@ -4,3 +4,6 @@
 [submodule "src/submodules/security-service"]
 	path = src/submodules/security-service
 	url = git@github.com:dzoms/security-service.git
+[submodule "src/submodules/transfer-contact"]
+	path = src/submodules/transfer-contact
+	url = git@github.com:dzoms/transfer-contract.git
