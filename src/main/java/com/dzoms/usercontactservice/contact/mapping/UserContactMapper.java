@@ -19,9 +19,6 @@ public abstract class UserContactMapper {
      * @param to to-модель контакта
      * @return entity с представленными полями
      */
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user1Id", ignore = true)
-    @Mapping(target = "user2Id", ignore = true)
     public abstract UserContactEntity mapFromTo(UserContactTo to);
 
     /**
@@ -30,8 +27,5 @@ public abstract class UserContactMapper {
      * @param entity entity контакта
      * @return to с представленными полями
      */
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user1Id", ignore = true)
-    @Mapping(target = "user2Id", ignore = true)
     public abstract UserContactTo mapFromEntity(UserContactEntity entity);
 }

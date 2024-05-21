@@ -7,19 +7,24 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import transfer.contract.domain.usercontact.UserContactOperationResultTo;
+import transfer.contract.domain.usercontact.UserContactTo;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
- * Контролелр для взаимодействия с пользвоательскими контактами.
+ * Контроллер для взаимодействия с пользвоательскими контактами.
  */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user-contact")
 @Tag(name = "UserContactController",
-        description = "Контролелр для взаимодействия с пользвоательскими контактами")
+        description = "Контроллер для взаимодействия с пользвоательскими контактами")
+@CrossOrigin
 public class UserContactController {
     /**
      * Use case для поиска контактов пользователей.
@@ -30,15 +35,27 @@ public class UserContactController {
      */
     private final UserContactCreateUseCase createUseCase;
 
+    /**
+     * Запрос на создание нового пользовательского контакта.
+     * @param userId идентификатор пользователя, которого добавляют в контакт.
+     * @return результат операции создания
+     */
     @PostMapping
-    @Operation(summary = "Добавить пользователя в контакты")
+    @Operation(summary = "Создать пользовательский контакт")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserContactOperationResultTo addUserContact(final @Valid @RequestBody UUID userId) {
-        return createUseCase.addUserContact(userId);
+    public UserContactOperationResultTo createUserContact(final @Valid @RequestBody UUID userId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return createUseCase.createUserContact(userId, UUID.fromString(authentication.getName()));
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
+    /**
+     * Запрос на создание нового пользовательского контакта.
+     * @return результат операции создания
+     */
+    @GetMapping(value = "/{userId}", produces = "application/json")
+    @Operation(summary = "Получить пользовательские контакты")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserContactTo> getUserContact(@PathVariable final UUID userId) {
+        return findUseCase.getAllUserContact(userId);
     }
 }
